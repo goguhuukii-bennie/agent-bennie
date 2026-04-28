@@ -6,34 +6,27 @@
 <title>Register - Baby Bennie</title>
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
---bg:#FFF0F6;
---main:#F6A5C9;
---dark:#E889B5;
---white:#FFFFFF;
---glow:rgba(246,165,201,0.4);
-}
+:root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Mitr',sans-serif;}
 body{ background:var(--bg); display:flex; justify-content:center; min-height: 100vh; padding: 20px 0; }
 .container{ max-width:500px; width:100%; padding:0 15px; }
-.section{
-    background:var(--white); border-radius:25px; padding:25px; margin-bottom:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.05); border:2px solid var(--main);
-}
+.section{ background:var(--white); border-radius:25px; padding:25px; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.05); border:2px solid var(--main); }
 h1, h2 { color: var(--dark); text-align: center; margin-bottom: 15px; }
+
+/* บอร์ดประกาศดึงจาก Sheets */
+.announcement-box { background: #fff9fb; border-radius: 15px; padding: 15px; border-left: 5px solid var(--main); margin-bottom: 15px; min-height: 60px; }
+#ruleDisplay { font-size: 14px; color: #d06d9b; line-height: 1.6; white-space: pre-wrap; }
+.loading-text { color: #ccc; font-style: italic; font-size: 12px; }
+
 .form-group { margin-bottom: 15px; }
 label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
-input {
-    width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5;
-    background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px;
-}
-input:focus { border-color: var(--main); box-shadow: 0 0 8px var(--glow); }
-.btn-submit {
-    background: var(--main); color: white; border: none; padding: 15px;
-    border-radius: 25px; font-size: 16px; cursor: pointer; font-family: 'Mitr';
-    width: 100%; margin-top: 20px; transition: 0.3s;
-}
+input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px; }
+input:focus { border-color: var(--main); }
+
+.check-confirm { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 13px; color: #666; margin-bottom: 10px; background: #fff9fb; padding: 12px; border-radius: 15px; border: 1px dashed var(--main); }
+.btn-submit { background: var(--main); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Mitr'; transition: 0.3s; }
 .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
 #waitMessage { text-align: center; color: #ff4d4d; font-size: 14px; font-weight: bold; margin-top: 15px; display: none; }
 .floating-emoji { position: fixed; bottom: -10%; z-index: -1; pointer-events: none; opacity: 0.3; animation: floatUp linear infinite; }
 @keyframes floatUp { 0%{transform:translateY(0) rotate(0deg);opacity:0} 100%{transform:translateY(-110vh) rotate(360deg);opacity:0} }
@@ -44,85 +37,82 @@ input:focus { border-color: var(--main); box-shadow: 0 0 8px var(--glow); }
 <div class="container">
     
     <div class="section">
-        <div style="font-size: 50px; text-align: center;">🎉</div>
-        <h1>สมัครสมาชิก</h1>
-        <p style="color: #888; font-size: 14px; text-align: center;">กรอกข้อมูลสมัครตัวแทน Baby Bennie<br>(ข้อมูลส่วนตัวจะถูกเก็บเป็นความลับค่ะ)</p>
+        <div style="font-size: 24px; text-align: center; margin-bottom: 10px;">📢 ประกาศจากทางร้าน</div>
+        <div class="announcement-box">
+            <div id="ruleDisplay" class="loading-text">กำลังโหลดประกาศล่าสุด...</div>
+        </div>
+        <p style="font-size: 10px; color: #aaa; text-align: right;">* แก้ไขกฎได้ทันทีผ่าน Google Sheets</p>
     </div>
 
     <form id="regForm">
         <div class="section">
             <h2>📝 ข้อมูลสมัครตัวแทน</h2>
-            
-            <div class="form-group">
-                <label>ชื่อ-นามสกุล (เก็บเป็นความลับ) *</label>
-                <input type="text" name="fullName" required placeholder="ระบุชื่อจริง-นามสกุล">
-            </div>
+            <div class="form-group"><label>ชื่อ-นามสกุล (ความลับ) *</label><input type="text" name="fullName" required placeholder="ระบุชื่อจริง"></div>
+            <div class="form-group"><label>ชื่อเล่น (ใช้ทำป้าย) *</label><input type="text" name="nickName" required placeholder="ระบุชื่อเล่น"></div>
+            <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required placeholder="เช่น TikTok, FB, IG"></div>
+            <div class="form-group"><label>อีเมล (Email) *</label><input type="email" name="email" required placeholder="example@mail.com"></div>
+            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="วางลิงก์โปรไฟล์เฟสบุ๊ค"></div>
+            <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="วางลิงก์เพิ่มเพื่อนไลน์"></div>
 
-            <div class="form-group">
-                <label>ชื่อเล่น (ใช้โชว์ในป้ายตัวแทน) *</label>
-                <input type="text" name="nickName" required placeholder="ระบุชื่อเล่นที่ต้องการ">
-            </div>
-
-            <div class="form-group">
-                <label>ช่องทางการขาย (หน้าร้าน) *</label>
-                <input type="text" name="shop" required placeholder="เช่น TikTok, เพจ Facebook">
-            </div>
-
-            <div class="form-group">
-                <label>อีเมล (Email) *</label>
-                <input type="email" name="email" required placeholder="ตัวอย่าง: baby@gmail.com">
-            </div>
-
-            <div class="form-group">
-                <label>ลิงก์ Facebook *</label>
-                <input type="url" name="fbLink" required placeholder="แนบลิงก์โปรไฟล์เฟสบุ๊ค">
-            </div>
-
-            <div class="form-group">
-                <label>ลิงก์ LINE *</label>
-                <input type="url" name="lineLink" required placeholder="แนบลิงก์เพิ่มเพื่อนไลน์">
-            </div>
-
-            <div class="form-group">
-                <label>รูปภาพสำหรับทำป้าย (แนบลิงก์รูป) *</label>
-                <input type="text" name="imgFile" required placeholder="วางลิงก์รูปภาพที่นี่">
-            </div>
-
-            <label style="display:flex; gap:10px; align-items:center; cursor:pointer; font-size: 13px; color: #666; margin-top: 10px;">
-                <input type="checkbox" id="agree" style="width:18px; height:18px;" onchange="document.getElementById('submitBtn').disabled = !this.checked"> 
-                ฉันยอมรับเงื่อนไขการเป็นตัวแทน Baby Bennie
+            <label class="check-confirm">
+                <input type="checkbox" id="photoConfirm" style="width:18px; height:18px; margin-top: 2px;" required>
+                <span><b>ยืนยันส่งรูป:</b> ฉันรับทราบว่าต้องส่งรูปทำป้ายเข้าทางแชทแอดมินโดยตรงเพื่อความคมชัดค่ะ 📸</span>
             </label>
 
-            <button type="submit" id="submitBtn" class="btn-submit" disabled>ยืนยันการส่งข้อมูล ✨</button>
-            <div id="waitMessage">✅ ส่งข้อมูลสำเร็จ!<br>ข้อมูลถูกส่งไปที่ระบบแล้ว โปรดรอติดต่อกลับใน 24 ชม.</div>
+            <label style="display:flex; gap:10px; align-items:center; cursor:pointer; font-size: 13px; margin-bottom:15px; padding-left:12px;">
+                <input type="checkbox" id="agree" onchange="checkBoth()"> ฉันอ่านประกาศและยอมรับเงื่อนไขทั้งหมด
+            </label>
+
+            <button type="submit" id="submitBtn" class="btn-submit" disabled>ยืนยันการสมัคร ✨</button>
+            <div id="waitMessage">✅ ส่งข้อมูลสำเร็จ!<br>โปรดรอติดต่อกลับภายใน 24 ชม. นะคะ</div>
         </div>
+        <input type="hidden" name="imgFile" value="รับทราบ/จะส่งรูปในแชท">
     </form>
 </div>
 
 <script>
-    // เชื่อมต่อกับบุรุษไปรษณีย์ Google Sheets
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzU5PUqxFnb16rj6vzIFaBo9VWtt-t7EYDQebNMLS-oe74Kta-plFxmEl7CUuQujwybNw/exec'; 
-    const form = document.getElementById('regForm');
+    // ใช้ลิงก์ Web App URL ตัวล่าสุดที่คุณส่งมา
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyekpXWWPSSOXSGjiX-W9TUYwWxcPH7QA1ZkFvr3wR8NYcvNbd6HdVVLueMSxGw-jGaEw/exec';
 
+    // 1. ดึงกฎจาก Sheets (GET)
+    window.onload = function() {
+        fetch(scriptURL)
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById('ruleDisplay').innerText = text;
+                document.getElementById('ruleDisplay').classList.remove('loading-text');
+            })
+            .catch(error => {
+                document.getElementById('ruleDisplay').innerText = "ยินดีต้อนรับสู่ครอบครัว Baby Bennie ค่ะ ✨";
+            });
+    };
+
+    // 2. ระบบตรวจสอบการติ๊กเลือก
+    function checkBoth() {
+        const photo = document.getElementById('photoConfirm').checked;
+        const agree = document.getElementById('agree').checked;
+        document.getElementById('submitBtn').disabled = !(photo && agree);
+    }
+    document.getElementById('photoConfirm').addEventListener('change', checkBoth);
+
+    // 3. ส่งข้อมูลสมัคร (POST)
+    const form = document.getElementById('regForm');
     form.addEventListener('submit', e => {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        const msg = document.getElementById('waitMessage');
-        
         btn.disabled = true;
-        btn.innerText = "กำลังส่งข้อมูลถึงแอดมิน...";
+        btn.innerText = "กำลังบันทึกข้อมูล...";
 
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
             .then(response => {
                 btn.style.display = 'none';
-                msg.style.display = 'block';
-                alert("ส่งข้อมูลสำเร็จแล้วค่ะ! รอรับการติดต่อกลับนะคะ 🌷");
+                document.getElementById('waitMessage').style.display = 'block';
+                alert("บันทึกข้อมูลสำเร็จ! อย่าลืมส่งรูปในแชทนะคะ 🌷");
             })
             .catch(error => {
-                console.error('Error!', error.message);
-                alert("เกิดข้อผิดพลาด! กรุณาลองใหม่อีกครั้งนะคะ");
+                alert("เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะคะ");
                 btn.disabled = false;
-                btn.innerText = "ยืนยันการส่งข้อมูล ✨";
+                btn.innerText = "ยืนยันการสมัคร ✨";
             });
     });
 
