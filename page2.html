@@ -21,13 +21,29 @@ h1, h2 { color: var(--dark); text-align: center; margin-bottom: 15px; }
 label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
 input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px; }
 
-/* ส่วนติ๊กถูกไม่ให้ทะลุขอบ */
-.check-confirm, .agree-label { 
-    display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 13px; color: #666; 
-    margin-bottom: 15px; background: #fff9fb; padding: 15px; border-radius: 15px; border: 1px dashed var(--main);
-    line-height: 1.5; word-break: break-word;
+/* แก้ไขส่วนติ๊กถูกให้ชิดกันและสวยงาม */
+.confirm-container {
+    background: #fff9fb;
+    border-radius: 15px;
+    border: 1px dashed var(--main);
+    padding: 12px;
+    margin-bottom: 15px;
 }
-input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; }
+.check-item { 
+    display: flex; 
+    gap: 10px; 
+    align-items: flex-start; 
+    cursor: pointer; 
+    font-size: 13px; 
+    color: #666; 
+    padding: 8px 0;
+    line-height: 1.4;
+    word-break: break-word;
+}
+.check-item:first-child { border-bottom: 1px solid #fce4ec; padding-top: 0; }
+.check-item:last-child { padding-bottom: 0; }
+
+input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; cursor: pointer; }
 
 .btn-submit { background: var(--main); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Mitr'; }
 .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
@@ -88,22 +104,24 @@ input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; }
     <form id="regForm">
         <div class="section">
             <h2>📝 ข้อมูลสมัครตัวแทน</h2>
-            <div class="form-group"><label>ชื่อ-นามสกุล *</label><input type="text" name="fullName" required></div>
-            <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickName" required></div>
-            <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required></div>
-            <div class="form-group"><label>อีเมล *</label><input type="email" name="email" required></div>
-            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required></div>
-            <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required></div>
+            <div class="form-group"><label>ชื่อ-นามสกุล *</label><input type="text" name="fullName" required placeholder="ระบุชื่อจริง"></div>
+            <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickName" required placeholder="ระบุชื่อเล่น"></div>
+            <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required placeholder="เช่น TikTok, FB, IG"></div>
+            <div class="form-group"><label>อีเมล *</label><input type="email" name="email" required placeholder="example@mail.com"></div>
+            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="วางลิงก์เฟสบุ๊ค"></div>
+            <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="วางลิงก์ไลน์"></div>
 
-            <label class="check-confirm">
-                <input type="checkbox" id="photoConfirm" required>
-                <span><b>ยืนยันส่งรูป:</b> ฉันรับทราบว่าต้องส่งรูปทำป้ายเข้าทางแชทแอดมินโดยตรงค่ะ 📸</span>
-            </label>
+            <div class="confirm-container">
+                <label class="check-item">
+                    <input type="checkbox" id="photoConfirm" onchange="checkBoth()" required>
+                    <span><b>ยืนยันส่งรูป:</b> ฉันรับทราบว่าต้องส่งรูปทำป้ายเข้าทางแชทแอดมินโดยตรงค่ะ 📸</span>
+                </label>
 
-            <label class="agree-label">
-                <input type="checkbox" id="agree" onchange="checkBoth()"> 
-                <span>ฉันอ่านประกาศและยอมรับเงื่อนไขทั้งหมด</span>
-            </label>
+                <label class="check-item">
+                    <input type="checkbox" id="agree" onchange="checkBoth()" required>
+                    <span>ฉันอ่านประกาศและยอมรับเงื่อนไขทั้งหมด</span>
+                </label>
+            </div>
 
             <button type="submit" id="submitBtn" class="btn-submit" disabled>ยืนยันการสมัคร ✨</button>
         </div>
@@ -125,7 +143,6 @@ input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; }
         const agree = document.getElementById('agree').checked;
         document.getElementById('submitBtn').disabled = !(photo && agree);
     }
-    document.getElementById('photoConfirm').addEventListener('change', checkBoth);
 
     const form = document.getElementById('regForm');
     form.addEventListener('submit', e => {
@@ -136,12 +153,12 @@ input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; }
 
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
             .then(response => {
-                // โชว์ป๊อปอัพเมื่อสำเร็จ
                 document.getElementById('contactModal').style.display = 'flex';
             })
             .catch(error => {
                 alert("เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะคะ");
                 btn.disabled = false;
+                btn.innerText = "ยืนยันการสมัคร ✨";
             });
     });
 
