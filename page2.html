@@ -12,23 +12,32 @@
         .container{ max-width:500px; width:100%; padding:0 15px; }
         .section{ background:var(--white); border-radius:25px; padding:25px; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.05); border:2px solid var(--main); }
         h1, h2 { color: var(--dark); text-align: center; margin-bottom: 15px; }
+
+        /* บอร์ดประกาศ */
+        .announcement-box { background: #fff9fb; border-radius: 15px; padding: 15px; border-left: 5px solid var(--main); margin-bottom: 15px; }
+        #ruleDisplay { font-size: 14px; color: #d06d9b; line-height: 1.6; white-space: pre-wrap; width: 100%; word-break: break-word; }
+
         .form-group { margin-bottom: 15px; }
         label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
-        input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-size: 14px; font-family: 'Mitr'; }
-        
+        input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px; }
+
+        /* แก้ปัญหาแท่งไอติมบน iPad: บังคับการจัดวางแบบ Table */
         .confirm-container { background: #fff9fb; border-radius: 15px; border: 1px dashed var(--main); margin-bottom: 15px; padding: 5px; }
         .check-item { display: table; width: 100%; cursor: pointer; padding: 15px; }
         .check-item:first-child { border-bottom: 1px solid #fce4ec; }
-        input[type="checkbox"] { display: table-cell; min-width: 22px; height: 22px; vertical-align: top; cursor: pointer; accent-color: var(--main); }
+        input[type="checkbox"] { display: table-cell; min-width: 22px !important; height: 22px !important; cursor: pointer; accent-color: var(--main); vertical-align: top; }
         .check-item span { display: table-cell; padding-left: 15px; font-size: 14px; color: #666; line-height: 1.5; vertical-align: middle; text-align: left; }
 
         .btn-submit { background: var(--main); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Mitr'; transition: 0.3s; }
         .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
 
+        /* Pop-up ติดต่อแอดมิน */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-        .modal-content { background: white; padding: 30px; border-radius: 30px; text-align: center; max-width: 400px; width: 100%; border: 4px solid var(--main); animation: popIn 0.3s ease; }
-        @keyframes popIn { from{transform:scale(0.8); opacity:0;} to{transform:scale(1); opacity:1;} }
-        .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; padding: 12px; border-radius: 15px; margin: 10px 0; font-weight: 500; font-size: 14px; }
+        .modal-content { background: white; padding: 30px; border-radius: 30px; text-align: center; max-width: 400px; width: 100%; border: 4px solid var(--main); animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; padding: 12px; border-radius: 15px; margin: 10px 0; font-weight: 500; }
+        .fb-btn { background: #E7F3FF !important; color: #1877F2 !important; }
+        .line-btn { background: #E7F9EE !important; color: #06C755 !important; }
     </style>
 </head>
 <body>
@@ -36,15 +45,20 @@
 <div class="modal-overlay" id="contactModal">
     <div class="modal-content">
         <div style="font-size: 50px;">💖</div>
-        <h2 style="color: var(--dark);">สมัครสำเร็จแล้วค่ะ!</h2>
-        <p style="font-size: 14px; color: #888; margin: 10px 0 20px;">ติดต่อแอดมินเพื่อแจ้งชื่อได้เลยนะคะ</p>
-        <a href="https://www.facebook.com/biebxnz?" target="_blank" style="background:#E7F3FF; color:#1877F2;" class="contact-btn">🔵 Facebook: biebxnz</a>
-        <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" style="background:#E7F9EE; color:#06C755;" class="contact-btn">🟢 Line: Baby Bennie</a>
-        <button onclick="window.location.href='index.html'" style="background:none; border:none; color:#ccc; text-decoration:underline; cursor:pointer; font-family:'Mitr'; margin-top:10px;">กลับหน้าหลัก</button>
+        <h2 style="color: var(--dark); margin-bottom: 10px;">ส่งข้อมูลสำเร็จแล้ว!</h2>
+        <p style="font-size: 14px; color: #888; margin-bottom: 20px;">ติดต่อแอดมินทางไหนก็ได้เลยนะคะ</p>
+        <a href="https://www.facebook.com/biebxnz?" target="_blank" class="contact-btn fb-btn">🔵 Facebook: biebxnz</a>
+        <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" class="contact-btn line-btn">🟢 Line: Baby Bennie</a>
+        <button onclick="window.location.href='index.html'" style="background: none; border: none; color: #ccc; margin-top: 15px; cursor: pointer; text-decoration: underline; font-family: 'Mitr';">กลับหน้าหลัก</button>
     </div>
 </div>
 
 <div class="container">
+    <div class="section">
+        <h2 style="font-size: 18px;">📢 ประกาศจากทางร้าน</h2>
+        <div class="announcement-box"><div id="ruleDisplay">กำลังโหลดประกาศ...</div></div>
+    </div>
+
     <form id="regForm">
         <div class="section">
             <h2>📝 ข้อมูลสมัครตัวแทน</h2>
@@ -56,24 +70,27 @@
             <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="https://..."></div>
 
             <div class="confirm-container">
-                <label class="check-item"><input type="checkbox" id="c1" required onchange="check()"><span>ยืนยันส่งรูปทางแชทเพื่อความชัดค่ะ 📸</span></label>
-                <label class="check-item"><input type="checkbox" id="c2" required onchange="check()"><span>ฉันยอมรับเงื่อนไขและกฎทั้งหมด</span></label>
+                <label class="check-item"><input type="checkbox" id="c1" onchange="chk()" required><span>ยืนยันส่งรูปทางแชทเพื่อความชัด 📸</span></label>
+                <label class="check-item"><input type="checkbox" id="c2" onchange="chk()" required><span>ฉันอ่านประกาศและยอมรับเงื่อนไข</span></label>
             </div>
 
-            <button type="submit" id="submitBtn" class="btn-submit" disabled>ยืนยันข้อมูลสมัคร ✨</button>
+            <button type="submit" id="submitBtn" class="btn-submit" disabled>ยืนยันการสมัคร ✨</button>
         </div>
         <input type="hidden" name="imgFile" value="รับทราบ/จะส่งรูปในแชท">
     </form>
 </div>
 
 <script>
-    // ใช้ URL ล่าสุดที่คุณก๊อปมาเลยค่ะ
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzUmcEUHQsJLdVA1i3TJll0Lnm1tkwva9l_gjyCgu2zMJZIXSvsqI_Y_N5cSkyLbrkxYw/exec';
 
-    function check() {
-        const c1 = document.getElementById('c1').checked;
-        const c2 = document.getElementById('c2').checked;
-        document.getElementById('submitBtn').disabled = !(c1 && c2);
+    window.onload = function() {
+        fetch(scriptURL).then(r => r.text()).then(t => document.getElementById('ruleDisplay').innerText = t || "ยินดีต้อนรับค่ะ ✨");
+    };
+
+    function chk() {
+        const photo = document.getElementById('c1').checked;
+        const agree = document.getElementById('c2').checked;
+        document.getElementById('submitBtn').disabled = !(photo && agree);
     }
 
     const form = document.getElementById('regForm');
@@ -81,25 +98,17 @@
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
         btn.disabled = true;
-        btn.innerText = "กำลังส่งข้อมูล...";
+        btn.innerText = "กำลังบันทึกข้อมูล...";
 
-        // ใช้ mode: 'no-cors' เพื่อข้ามปัญหาการบล็อกข้ามเว็บ
-        fetch(scriptURL, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            body: new FormData(form)
-        })
-        .then(() => {
-            // เมื่อใช้ no-cors เราจะไม่รู้ว่าสำเร็จไหม แต่ปกติข้อมูลจะเข้าชีทแล้ว
-            // เราจะบังคับโชว์ป๊อปอัพทันทีหลังส่งค่ะ
-            document.getElementById('contactModal').style.display = 'flex';
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            // ถ้าพังจริงๆ ถึงจะแจ้งเตือนค่ะ
-            alert("ระบบขัดข้องนิดหน่อย แต่ข้อมูลอาจจะเข้าแล้ว ลองเช็คแชทดูนะคะ");
-            btn.disabled = false;
-        });
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form)})
+            .then(() => {
+                document.getElementById('contactModal').style.display = 'flex';
+            })
+            .catch(error => {
+                alert("ลองใหม่อีกครั้งนะคะ");
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการสมัคร ✨";
+            });
     });
 </script>
 </body>
