@@ -11,12 +11,8 @@
         body{ background:var(--bg); display:flex; justify-content:center; min-height: 100vh; padding: 20px 0; }
         .container{ max-width:500px; width:100%; padding:0 15px; }
         .section{ background:var(--white); border-radius:25px; padding:25px; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.05); border:2px solid var(--main); }
-        h2 { color: var(--dark); text-align: center; margin-bottom: 20px; }
+        h2 { color: var(--dark); text-align: center; margin-bottom: 20px; font-size: 22px; }
         
-        /* บอร์ดประกาศดึงจาก Sheets Rules A1 */
-        .announcement-box { background: #fff9fb; border-radius: 15px; padding: 15px; border-left: 5px solid var(--main); margin-bottom: 15px; }
-        #ruleDisplay { font-size: 14px; color: #d06d9b; line-height: 1.6; white-space: pre-wrap; width: 100%; word-break: break-word; }
-
         .form-group { margin-bottom: 15px; }
         label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
         input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-size: 14px; font-family: 'Mitr'; }
@@ -28,10 +24,10 @@
         .row-check input { display: table-cell; min-width: 22px !important; height: 22px !important; vertical-align: top; accent-color: var(--main); }
         .row-check span { display: table-cell; padding-left: 15px; font-size: 14px; color: #666; line-height: 1.5; vertical-align: middle; text-align: left; }
 
-        .btn-submit { background: var(--main); color: white; border: none; padding: 16px; border-radius: 30px; font-size: 16px; cursor: pointer; width: 100%; font-family: 'Mitr'; font-weight: 500; }
+        .btn-submit { background: var(--main); color: white; border: none; padding: 16px; border-radius: 30px; font-size: 16px; cursor: pointer; width: 100%; font-family: 'Mitr'; font-weight: 500; transition: 0.3s; }
         .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* ป๊อปอัพ Success */
+        /* ป๊อปอัพ Contact */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
         .modal-body { background: white; padding: 30px; border-radius: 30px; text-align: center; max-width: 400px; width: 100%; border: 4px solid var(--main); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .contact-link { display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; padding: 12px; border-radius: 15px; margin: 10px 0; font-weight: 500; }
@@ -44,7 +40,7 @@
 <div class="modal" id="pop">
     <div class="modal-body">
         <div style="font-size: 50px; margin-bottom: 10px;">💖</div>
-        <h2>สมัครสำเร็จแล้วค่ะ!</h2>
+        <h2>ส่งข้อมูลสำเร็จแล้วค่ะ!</h2>
         <p style="font-size: 14px; color: #888; margin-bottom: 20px;">ทักแอดมินมาแจ้งชื่อสมัครได้เลยน้าาา</p>
         <a href="https://www.facebook.com/biebxnz?" target="_blank" class="contact-link fb-btn">🔵 Facebook: biebxnz</a>
         <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" class="contact-link line-btn">🟢 Line: Baby Bennie</a>
@@ -54,63 +50,63 @@
 
 <div class="container">
     <div class="section">
-        <h2 style="font-size: 18px;">📢 ประกาศจากทางร้าน</h2>
-        <div class="announcement-box"><div id="ruleDisplay">กำลังโหลดประกาศล่าสุด...</div></div>
+        <h2 style="font-size: 18px; margin-bottom: 10px;">📢 ประกาศจากทางร้าน</h2>
+        <div style="background: #fff9fb; border-radius: 15px; padding: 15px; border-left: 5px solid var(--main); font-size: 14px; color: #d06d9b; line-height: 1.6; white-space: pre-wrap;">
+ยินดีต้อนรับสู่ Baby Bennie ค่ะ ✨
+กรุณากรอกข้อมูลให้ครบถ้วนเพื่อผลประโยชน์ของตัวท่านเองนะคะ
+        </div>
     </div>
 
-    <form id="f">
+    <form id="f" action="https://formspree.io/f/xnjlejwb" method="POST">
         <div class="section">
-            <h2>📝 ข้อมูลสมัครตัวแทน</h2>
+            <h2>📝 สมัครตัวแทน</h2>
             <div class="form-group"><label>ชื่อ-นามสกุล *</label><input type="text" name="fullName" required></div>
             <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickName" required></div>
-            <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required></div>
+            <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required placeholder="TikTok, FB, IG"></div>
             <div class="form-group"><label>อีเมล *</label><input type="email" name="email" required></div>
+            
             <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="https://facebook.com/..."></div>
             <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="https://line.me/ti/p/..."></div>
 
             <div class="confirm-box">
-                <label class="row-check"><input type="checkbox" id="c1" required><span>ยืนยันส่งรูปทำป้ายในแชทเพื่อความชัดค่ะ 📸</span></label>
+                <label class="row-check"><input type="checkbox" id="c1" required><span>ยืนยันจะส่งรูปทำป้ายในแชทค่ะ 📸</span></label>
                 <label class="row-check"><input type="checkbox" id="c2" required onchange="v()"><span>ฉันอ่านประกาศและยอมรับเงื่อนไขทั้งหมด</span></label>
             </div>
 
-            <button type="submit" id="sub" class="btn-submit" disabled>ยืนยันการสมัคร ✨</button>
+            <button type="submit" id="sub" class="btn-submit" disabled>ยืนยันสมัคร ✨</button>
         </div>
-        <input type="hidden" name="imgFile" value="จะส่งรูปในแชท">
+        <input type="hidden" name="imgFile" value="รับทราบ/จะส่งรูปในแชท">
     </form>
 </div>
 
 <script>
-    // ลิงก์ Web App ล่าสุดของคุณ
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwbePCTBmXQZC7e59ysEjhBl-ZlmnGMy_Cz6hHgFGK5y3ClDJ4X2Q00GFIogKWCzj9T/exec';
-
-    // ดึงประกาศจากหน้า Rules (doGet)
-    window.onload = function() {
-        fetch(scriptURL).then(r => r.text()).then(t => {
-            document.getElementById('ruleDisplay').innerText = t || "ยินดีต้อนรับสู่ Baby Bennie ค่ะ ✨";
-        });
-    };
-
     function v() { 
         document.getElementById('sub').disabled = !(document.getElementById('c1').checked && document.getElementById('c2').checked); 
     }
     document.getElementById('c1').addEventListener('change', v);
 
     const form = document.getElementById('f');
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         const b = document.getElementById('sub');
-        b.disabled = true; b.innerText = "กำลังบันทึกข้อมูล...";
+        b.disabled = true; b.innerText = "กำลังส่งข้อมูล...";
 
-        // ใช้โหมด no-cors เพื่อให้ส่งข้อมูลผ่านข้ามเว็บได้เสถียรที่สุด
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form)})
-            .then(() => { 
-                document.getElementById('pop').style.display = 'flex'; 
-                b.innerText = "ยืนยันการสมัคร ✨"; 
-            })
-            .catch(() => { 
-                alert("เกิดข้อผิดพลาดนิดหน่อย ลองกดใหม่อีกครั้งนะคะ"); 
-                b.disabled = false; 
-            });
+        const data = new FormData(form);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            document.getElementById('pop').style.display = 'flex';
+            b.innerText = "ยืนยันสมัคร ✨";
+            form.reset();
+        } else {
+            alert("เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะคะ");
+            b.disabled = false;
+            b.innerText = "ยืนยันสมัคร ✨";
+        }
     });
 </script>
 </body>
