@@ -21,29 +21,35 @@ h1, h2 { color: var(--dark); text-align: center; margin-bottom: 15px; }
 label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
 input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px; }
 
-/* แก้ไขส่วนติ๊กถูกให้ชิดกันและสวยงาม */
+/* ปรับปรุงส่วนติ๊กถูกให้เต็มความกว้างช่อง */
 .confirm-container {
     background: #fff9fb;
     border-radius: 15px;
     border: 1px dashed var(--main);
-    padding: 12px;
+    padding: 5px 15px;
     margin-bottom: 15px;
 }
 .check-item { 
     display: flex; 
-    gap: 10px; 
-    align-items: flex-start; 
+    gap: 15px; 
+    align-items: center; /* จัดให้กล่องติ๊กถูกกับข้อความอยู่กลางแนวนอน */
     cursor: pointer; 
     font-size: 13px; 
     color: #666; 
-    padding: 8px 0;
+    padding: 15px 0;
     line-height: 1.4;
     word-break: break-word;
+    width: 100%; /* ให้ยาวเต็มช่อง */
 }
-.check-item:first-child { border-bottom: 1px solid #fce4ec; padding-top: 0; }
-.check-item:last-child { padding-bottom: 0; }
+.check-item span { flex: 1; } /* ให้ข้อความขยายเต็มพื้นที่ที่เหลือ */
+.check-item:first-child { border-bottom: 1px solid #fce4ec; }
 
-input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; cursor: pointer; }
+input[type="checkbox"] { 
+    min-width: 20px; 
+    min-height: 20px; 
+    cursor: pointer; 
+    accent-color: var(--main); /* เปลี่ยนสีติ๊กถูกให้เป็นสีชมพู */
+}
 
 .btn-submit { background: var(--main); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Mitr'; }
 .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
@@ -108,7 +114,7 @@ input[type="checkbox"] { min-width: 18px; min-height: 18px; margin-top: 2px; cur
             <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickName" required placeholder="ระบุชื่อเล่น"></div>
             <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required placeholder="เช่น TikTok, FB, IG"></div>
             <div class="form-group"><label>อีเมล *</label><input type="email" name="email" required placeholder="example@mail.com"></div>
-            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="วางลิงก์เฟสบุ๊ค"></div>
+            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="วางลิงก์ไลน์"></div>
             <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="วางลิงก์ไลน์"></div>
 
             <div class="confirm-container">
