@@ -130,10 +130,10 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
 </div>
 
 <script>
-    // --- 1. ฐานข้อมูลตัวแทน (รหัสตัวแทนขึ้นต้นด้วย msb) ---
+    // --- 1. ฐานข้อมูลตัวแทน (เพิ่มช่อง platform เข้าไป) ---
     const agents = [
-        { id: "MSB01", name: "คุณบับบี่", status: "Active ✅" },
-        { id: "MSB02", name: "คุณสายใหม", status: "Active ✅" }
+        { id: "MSB01", name: "คุณบับบี่", platform: "TikTok / Facebook", status: "Active ✅" },
+        { id: "MSB02", name: "คุณสายใหม", platform: "Instagram / Line OA", status: "Active ✅" }
     ];
 
     function checkAgent() {
@@ -148,10 +148,11 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
             res.style.color = '#28a745';
             res.innerHTML = `
                 <b style="font-size:18px;">✅ พบข้อมูลตัวแทนแท้</b><br>
-                <div style="margin-top:8px; color:#555; text-align:left; display:inline-block;">
-                    รหัส: ${found.id}<br>
-                    ชื่อ: ${found.name}<br>
-                    สถานะ: ${found.status}
+                <div style="margin-top:8px; color:#555; text-align:left; display:inline-block; font-size:14px;">
+                    <b>รหัส:</b> ${found.id}<br>
+                    <b>ชื่อ:</b> ${found.name}<br>
+                    <b>ช่องทางขาย:</b> ${found.platform}<br>
+                    <b>สถานะ:</b> ${found.status}
                 </div>
             `;
         } else {
@@ -162,18 +163,17 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
         }
     }
 
-    // --- 2. ระบบรหัสผ่านปลดล็อค และเชื่อมไปหน้า page2.html ---
+    // --- 2. ระบบรหัสผ่านปลดล็อค ---
     function unlockRegister() {
         const pass = document.getElementById('passInput').value;
-        const secretKey = "BENNIE888"; // <--- ตั้ง Passcode ตรงนี้ค่ะ
+        const secretKey = "BENNIE888"; 
 
         if (pass === secretKey) {
             document.getElementById('lockArea').style.display = 'none';
             document.getElementById('secretContent').style.display = 'block';
             
-            // ตั้งเวลา 1.5 วินาทีเพื่อให้ดูระบบกำลังประมวลผล แล้วค่อยเปลี่ยนหน้า
             setTimeout(function() {
-                window.location.href = "page2.html"; // ทางเชื่อมไปหน้าที่ 2
+                window.location.href = "page2.html"; 
             }, 1500);
             
         } else {
