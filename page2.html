@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Baby Bennie</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#FFF0F6;
+--main:#F6A5C9;
+--dark:#E889B5;
+--white:#FFFFFF;
+--glow:rgba(246,165,201,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Mitr',sans-serif;}
+body{ background:var(--bg); display:flex; justify-content:center; min-height: 100vh; padding: 20px 0; }
+.container{ max-width:500px; width:100%; padding:0 15px; }
+.section{
+    background:var(--white); border-radius:25px; padding:25px; margin-bottom:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.05); border:2px solid var(--main);
+}
+h1, h2 { color: var(--dark); text-align: center; margin-bottom: 15px; }
+.form-group { margin-bottom: 15px; }
+label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
+input {
+    width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5;
+    background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px;
+}
+input:focus { border-color: var(--main); box-shadow: 0 0 8px var(--glow); }
+.btn-submit {
+    background: var(--main); color: white; border: none; padding: 15px;
+    border-radius: 25px; font-size: 16px; cursor: pointer; font-family: 'Mitr';
+    width: 100%; margin-top: 20px; transition: 0.3s;
+}
+.btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+#waitMessage { text-align: center; color: #ff4d4d; font-size: 14px; font-weight: bold; margin-top: 15px; display: none; }
+.floating-emoji { position: fixed; bottom: -10%; z-index: -1; pointer-events: none; opacity: 0.3; animation: floatUp linear infinite; }
+@keyframes floatUp { 0%{transform:translateY(0) rotate(0deg);opacity:0} 100%{transform:translateY(-110vh) rotate(360deg);opacity:0} }
+</style>
+</head>
+<body>
+<div id="emoji-container"></div>
+<div class="container">
+    
+    <div class="section">
+        <div style="font-size: 50px; text-align: center;">🎉</div>
+        <h1>สมัครสมาชิก</h1>
+        <p style="color: #888; font-size: 14px; text-align: center;">กรอกข้อมูลสมัครตัวแทน Baby Bennie<br>(ข้อมูลส่วนตัวจะถูกเก็บเป็นความลับค่ะ)</p>
+    </div>
+
+    <form id="regForm">
+        <div class="section">
+            <h2>📝 ข้อมูลสมัครตัวแทน</h2>
+            
+            <div class="form-group">
+                <label>ชื่อ-นามสกุล (เก็บเป็นความลับ) *</label>
+                <input type="text" name="fullName" required placeholder="ระบุชื่อจริง-นามสกุล">
+            </div>
+
+            <div class="form-group">
+                <label>ชื่อเล่น (ใช้โชว์ในป้ายตัวแทน) *</label>
+                <input type="text" name="nickName" required placeholder="ระบุชื่อเล่นที่ต้องการ">
+            </div>
+
+            <div class="form-group">
+                <label>ช่องทางการขาย (หน้าร้าน) *</label>
+                <input type="text" name="shop" required placeholder="เช่น TikTok, เพจ Facebook">
+            </div>
+
+            <div class="form-group">
+                <label>อีเมล (Email) *</label>
+                <input type="email" name="email" required placeholder="ตัวอย่าง: baby@gmail.com">
+            </div>
+
+            <div class="form-group">
+                <label>ลิงก์ Facebook *</label>
+                <input type="url" name="fbLink" required placeholder="แนบลิงก์โปรไฟล์เฟสบุ๊ค">
+            </div>
+
+            <div class="form-group">
+                <label>ลิงก์ LINE *</label>
+                <input type="url" name="lineLink" required placeholder="แนบลิงก์เพิ่มเพื่อนไลน์">
+            </div>
+
+            <div class="form-group">
+                <label>รูปภาพสำหรับทำป้าย (แนบลิงก์รูป) *</label>
+                <input type="text" name="imgFile" required placeholder="วางลิงก์รูปภาพที่นี่">
+            </div>
+
+            <label style="display:flex; gap:10px; align-items:center; cursor:pointer; font-size: 13px; color: #666; margin-top: 10px;">
+                <input type="checkbox" id="agree" style="width:18px; height:18px;" onchange="document.getElementById('submitBtn').disabled = !this.checked"> 
+                ฉันยอมรับเงื่อนไขการเป็นตัวแทน Baby Bennie
+            </label>
+
+            <button type="submit" id="submitBtn" class="btn-submit" disabled>ยืนยันการส่งข้อมูล ✨</button>
+            <div id="waitMessage">✅ ส่งข้อมูลสำเร็จ!<br>ข้อมูลถูกส่งไปที่ระบบแล้ว โปรดรอติดต่อกลับใน 24 ชม.</div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // เชื่อมต่อกับบุรุษไปรษณีย์ Google Sheets
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzU5PUqxFnb16rj6vzIFaBo9VWtt-t7EYDQebNMLS-oe74Kta-plFxmEl7CUuQujwybNw/exec'; 
+    const form = document.getElementById('regForm');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('waitMessage');
+        
+        btn.disabled = true;
+        btn.innerText = "กำลังส่งข้อมูลถึงแอดมิน...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                btn.style.display = 'none';
+                msg.style.display = 'block';
+                alert("ส่งข้อมูลสำเร็จแล้วค่ะ! รอรับการติดต่อกลับนะคะ 🌷");
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("เกิดข้อผิดพลาด! กรุณาลองใหม่อีกครั้งนะคะ");
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการส่งข้อมูล ✨";
+            });
+    });
+
+    // Floating Emojis
+    const emojis = ['🐶', '⭐️', '🌷', '🩷'];
+    function createEmoji() {
+        const e = document.createElement('div'); e.className = 'floating-emoji';
+        e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+        e.style.left = Math.random()*100+'vw'; e.style.fontSize = (Math.random()*20+20)+'px';
+        e.style.animationDuration = (Math.random()*10+10)+'s';
+        document.getElementById('emoji-container').appendChild(e);
+        setTimeout(()=>e.remove(), 10000);
+    }
+    setInterval(createEmoji, 1500);
+</script>
+</body>
+</html>
