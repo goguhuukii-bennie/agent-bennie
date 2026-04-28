@@ -99,7 +99,7 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
         <h1>ระบบตรวจสอบตัวแทน</h1>
         <p>กรอกรหัสตัวแทนเพื่อยืนยันสถานะ<br>ว่าเป็นตัวแทนแท้จากทางร้านหรือไม่</p>
         
-        <input type="text" id="agentInput" placeholder="กรอกรหัสตัวแทน (เช่น BB01)">
+        <input type="text" id="agentInput" placeholder="กรอกรหัสตัวแทน (เช่น msb00)">
         <button onclick="checkAgent()" class="btn-main">ตรวจสอบข้อมูล ✨</button>
 
         <div id="resultBox"></div>
@@ -119,9 +119,7 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
             <div style="padding: 15px; background: #e7f9ee; border-radius: 15px; color: #198754; margin-bottom: 15px; font-size:14px;">
                 <b>ยืนยันรหัสผ่านถูกต้องค่ะ! ✅</b>
             </div>
-            <p>ยินดีต้อนรับเข้าสู่ครอบครัว Baby Bennie นะคะ<br>กดปุ่มด้านล่างเพื่อทักแอดมินสมัครได้เลยค่ะ</p>
-            <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" class="btn-main" style="background: var(--line);">ติดต่อสมัครทาง LINE 🌷</a>
-            <p style="margin-top: 15px; font-size: 11px; color: #ff4d4d;">* ข้อมูลนี้เป็นความลับเฉพาะตัวแทนเท่านั้น</p>
+            <p>กำลังพาท่านไปยังหน้าสมัครสมาชิก...</p>
         </div>
     </div>
 
@@ -132,10 +130,10 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
 </div>
 
 <script>
-    // --- 1. ฐานข้อมูลตัวแทน (คุณมาเพิ่ม/แก้ตรงนี้ได้เลย) ---
+    // --- 1. ฐานข้อมูลตัวแทน (รหัสตัวแทนขึ้นต้นด้วย msb) ---
     const agents = [
-        { id: "msb01", name: "คุณบับบี่", status: "Active ✅" },
-        { id: "msb02", name: "คุณสายใหม", status: "Active ✅" }
+        { id: "MSB01", name: "คุณบับบี่", status: "Active ✅" },
+        { id: "MSB02", name: "คุณสายใหม", status: "Active ✅" }
     ];
 
     function checkAgent() {
@@ -164,14 +162,20 @@ input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
         }
     }
 
-    // --- 2. ระบบรหัสผ่านปลดล็อค ---
+    // --- 2. ระบบรหัสผ่านปลดล็อค และเชื่อมไปหน้า page2.html ---
     function unlockRegister() {
         const pass = document.getElementById('passInput').value;
-        const secretKey = "BENNIE888"; // <--- ตั้งรหัสผ่านตรงนี้ค่ะ
+        const secretKey = "BENNIE888"; // <--- ตั้ง Passcode ตรงนี้ค่ะ
 
         if (pass === secretKey) {
             document.getElementById('lockArea').style.display = 'none';
             document.getElementById('secretContent').style.display = 'block';
+            
+            // ตั้งเวลา 1.5 วินาทีเพื่อให้ดูระบบกำลังประมวลผล แล้วค่อยเปลี่ยนหน้า
+            setTimeout(function() {
+                window.location.href = "page2.html"; // ทางเชื่อมไปหน้าที่ 2
+            }, 1500);
+            
         } else {
             alert("รหัสผ่านไม่ถูกต้องนะคะ ทักขอรหัสได้ที่แอดมินค่ะ 🌷");
         }
