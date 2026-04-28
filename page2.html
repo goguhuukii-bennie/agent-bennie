@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Register - Baby Bennie</title>
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -13,48 +13,43 @@ body{ background:var(--bg); display:flex; justify-content:center; min-height: 10
 .section{ background:var(--white); border-radius:25px; padding:25px; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.05); border:2px solid var(--main); }
 h1, h2 { color: var(--dark); text-align: center; margin-bottom: 15px; }
 
-/* บอร์ดประกาศ */
+/* บอร์ดประกาศดึงจาก Sheets */
 .announcement-box { background: #fff9fb; border-radius: 15px; padding: 15px; border-left: 5px solid var(--main); margin-bottom: 15px; }
-#ruleDisplay { font-size: 14px; color: #d06d9b; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+#ruleDisplay { font-size: 14px; color: #d06d9b; line-height: 1.6; white-space: pre-wrap; word-break: break-word; width: 100%; }
 
 .form-group { margin-bottom: 15px; }
 label { display: block; font-size: 14px; color: var(--dark); margin-bottom: 5px; font-weight: 500; }
 input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ffeef5; background: #fffcfd; outline: none; font-family: 'Mitr'; font-size: 14px; }
+input:focus { border-color: var(--main); }
 
-/* ปรับปรุงส่วนติ๊กถูกให้เต็มความกว้างช่อง */
-.confirm-container {
-    background: #fff9fb;
-    border-radius: 15px;
-    border: 1px dashed var(--main);
-    padding: 5px 15px;
-    margin-bottom: 15px;
-}
-.check-item { 
-    display: flex; 
-    gap: 15px; 
-    align-items: center; /* จัดให้กล่องติ๊กถูกกับข้อความอยู่กลางแนวนอน */
-    cursor: pointer; 
-    font-size: 13px; 
-    color: #666; 
-    padding: 15px 0;
-    line-height: 1.4;
-    word-break: break-word;
-    width: 100%; /* ให้ยาวเต็มช่อง */
-}
-.check-item span { flex: 1; } /* ให้ข้อความขยายเต็มพื้นที่ที่เหลือ */
+/* แก้ปัญหาตัวหนังสือแนวตั้งบน iPad (ใช้ระบบ Table บังคับ) */
+.confirm-container { background: #fff9fb; border-radius: 15px; border: 1px dashed var(--main); margin-bottom: 15px; padding: 5px; }
+.check-item { display: table; width: 100%; cursor: pointer; padding: 12px; }
 .check-item:first-child { border-bottom: 1px solid #fce4ec; }
 
 input[type="checkbox"] { 
-    min-width: 20px; 
-    min-height: 20px; 
-    cursor: pointer; 
-    accent-color: var(--main); /* เปลี่ยนสีติ๊กถูกให้เป็นสีชมพู */
+    display: table-cell;
+    min-width: 22px !important; 
+    height: 22px !important; 
+    cursor: pointer;
+    accent-color: var(--main);
+    vertical-align: top;
 }
 
-.btn-submit { background: var(--main); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Mitr'; }
+.check-item span { 
+    display: table-cell;
+    padding-left: 12px;
+    font-size: 14px; 
+    color: #666; 
+    line-height: 1.5;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.btn-submit { background: var(--main); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; font-family: 'Mitr'; transition: 0.3s; }
 .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
 
-/* Style สำหรับ Pop-up */
+/* Pop-up ติดต่อแอดมิน */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px;
@@ -71,7 +66,6 @@ input[type="checkbox"] {
 }
 .fb-btn { background: #E7F3FF; color: #1877F2; }
 .line-btn { background: #E7F9EE; color: #06C755; }
-.contact-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
 .floating-emoji { position: fixed; bottom: -10%; z-index: -1; pointer-events: none; opacity: 0.3; animation: floatUp linear infinite; }
 @keyframes floatUp { 0%{transform:translateY(0) rotate(0deg);opacity:0} 100%{transform:translateY(-110vh) rotate(360deg);opacity:0} }
@@ -85,16 +79,9 @@ input[type="checkbox"] {
     <div class="modal-content">
         <div style="font-size: 50px; margin-bottom: 10px;">💖</div>
         <h2 style="color: var(--dark);">ส่งข้อมูลเรียบร้อยค่ะ!</h2>
-        <p style="font-size: 14px; color: #888; margin-bottom: 20px;">ติดต่อแอดมินได้เสม๊อออ~<br>เพื่อความรวดเร็วในการแจ้งผลนะคะ</p>
-        
-        <a href="https://www.facebook.com/biebxnz?" target="_blank" class="contact-btn fb-btn">
-            <span>🔵 Facebook: biebxnz</span>
-        </a>
-        
-        <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" class="contact-btn line-btn">
-            <span>🟢 Line: Baby Bennie</span>
-        </a>
-        
+        <p style="font-size: 14px; color: #888; margin-bottom: 20px;">ติดต่อแอดมินได้เสม๊อออ~</p>
+        <a href="https://www.facebook.com/biebxnz?" target="_blank" class="contact-btn fb-btn"><span>🔵 Facebook: biebxnz</span></a>
+        <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" class="contact-btn line-btn"><span>🟢 Line: Baby Bennie</span></a>
         <button onclick="location.reload()" style="background: none; border: none; color: #ccc; margin-top: 15px; cursor: pointer; font-family: 'Mitr'; text-decoration: underline;">ปิดหน้านี้</button>
     </div>
 </div>
@@ -103,7 +90,7 @@ input[type="checkbox"] {
     <div class="section">
         <div style="font-size: 24px; text-align: center; margin-bottom: 10px;">📢 ประกาศจากทางร้าน</div>
         <div class="announcement-box">
-            <div id="ruleDisplay">กำลังโหลดประกาศล่าสุด...</div>
+            <div id="ruleDisplay">กำลังโหลดประกาศ...</div>
         </div>
     </div>
 
@@ -114,15 +101,15 @@ input[type="checkbox"] {
             <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickName" required placeholder="ระบุชื่อเล่น"></div>
             <div class="form-group"><label>ช่องทางการขาย *</label><input type="text" name="shop" required placeholder="เช่น TikTok, FB, IG"></div>
             <div class="form-group"><label>อีเมล *</label><input type="email" name="email" required placeholder="example@mail.com"></div>
-            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="วางลิงก์ไลน์"></div>
-            <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="วางลิงก์ไลน์"></div>
+            
+            <div class="form-group"><label>ลิงก์ Facebook *</label><input type="url" name="fbLink" required placeholder="วางลิงก์โปรไฟล์เฟสบุ๊ค"></div>
+            <div class="form-group"><label>ลิงก์ LINE *</label><input type="url" name="lineLink" required placeholder="วางลิงก์เพิ่มเพื่อนไลน์"></div>
 
             <div class="confirm-container">
                 <label class="check-item">
                     <input type="checkbox" id="photoConfirm" onchange="checkBoth()" required>
-                    <span><b>ยืนยันส่งรูป:</b> ฉันรับทราบว่าต้องส่งรูปทำป้ายเข้าทางแชทแอดมินโดยตรงค่ะ 📸</span>
+                    <span>ยืนยันส่งรูป: ฉันรับทราบว่าต้องส่งรูปทำป้ายเข้าทางแชทแอดมินค่ะ 📸</span>
                 </label>
-
                 <label class="check-item">
                     <input type="checkbox" id="agree" onchange="checkBoth()" required>
                     <span>ฉันอ่านประกาศและยอมรับเงื่อนไขทั้งหมด</span>
