@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent System - Baby Bennie</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#FFF0F6;
+--main:#F6A5C9;
+--dark:#E889B5;
+--white:#FFFFFF;
+--glow:rgba(246,165,201,0.4);
+--line:#06C755;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Mitr',sans-serif;}
+body{
+background:var(--bg);
+display:flex;
+justify-content:center;
+min-height: 100vh;
+overflow-x: hidden;
+}
+.container{
+max-width:500px;
+width:100%;
+padding:40px 15px;
+z-index: 1;
+}
+.section{
+background:var(--white);
+border-radius:25px;
+padding:30px 25px;
+margin-bottom:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
+border:2px solid var(--main);
+text-align: center;
+}
+h1, h2 { color: var(--dark); margin-bottom: 10px; }
+p { color: #888; font-size: 14px; margin-bottom: 20px; }
+
+/* Input & Button */
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 15px;
+    border: 1px solid #ffeef5;
+    background: #fffcfd;
+    outline: none;
+    font-family: 'Mitr';
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+input:focus { border-color: var(--main); box-shadow: 0 0 10px var(--glow); }
+
+.btn-main {
+    background: var(--main);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Mitr';
+    width: 100%;
+    transition: 0.3s;
+    text-decoration: none;
+    display: block;
+}
+.btn-main:hover { transform: scale(1.02); opacity: 0.9; }
+
+/* Result Box */
+#resultBox {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    display: none;
+    animation: fadeIn 0.5s;
+}
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+/* Floating Emojis */
+.floating-emoji { position: fixed; bottom: -10%; z-index: -1; pointer-events: none; opacity: 0.3; animation: floatUp linear infinite; }
+@keyframes floatUp { 0%{transform:translateY(0) rotate(0deg);opacity:0} 20%,80%{opacity:0.3} 100%{transform:translateY(-110vh) rotate(360deg);opacity:0} }
+
+.footer { text-align: center; margin-top: 30px; color: var(--dark); font-size: 12px; opacity: 0.7; }
+</style>
+</head>
+<body>
+
+<div id="emoji-container"></div>
+
+<div class="container">
+
+    <div class="section">
+        <div style="font-size: 45px; margin-bottom: 10px;">🛡️</div>
+        <h1>ระบบตรวจสอบตัวแทน</h1>
+        <p>กรอกรหัสตัวแทนเพื่อยืนยันสถานะ<br>ว่าเป็นตัวแทนแท้จากทางร้านหรือไม่</p>
+        
+        <input type="text" id="agentInput" placeholder="กรอกรหัสตัวแทน (เช่น BB01)">
+        <button onclick="checkAgent()" class="btn-main">ตรวจสอบข้อมูล ✨</button>
+
+        <div id="resultBox"></div>
+    </div>
+
+    <div class="section">
+        <div style="font-size: 45px; margin-bottom: 10px;">🌸</div>
+        <h2>สมัครตัวแทนจำหน่าย</h2>
+        
+        <div id="lockArea">
+            <p>กรุณาใส่ Passcode ลับจากเจ้าของร้าน<br>เพื่อดูรายละเอียดการสมัครนะคะ</p>
+            <input type="password" id="passInput" placeholder="ใส่รหัสผ่านลับ...">
+            <button onclick="unlockRegister()" class="btn-main" style="background: var(--dark);">ปลดล็อคหน้าสมัคร 🔒</button>
+        </div>
+
+        <div id="secretContent" style="display: none;">
+            <div style="padding: 15px; background: #e7f9ee; border-radius: 15px; color: #198754; margin-bottom: 15px; font-size:14px;">
+                <b>ยืนยันรหัสผ่านถูกต้องค่ะ! ✅</b>
+            </div>
+            <p>ยินดีต้อนรับเข้าสู่ครอบครัว Baby Bennie นะคะ<br>กดปุ่มด้านล่างเพื่อทักแอดมินสมัครได้เลยค่ะ</p>
+            <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank" class="btn-main" style="background: var(--line);">ติดต่อสมัครทาง LINE 🌷</a>
+            <p style="margin-top: 15px; font-size: 11px; color: #ff4d4d;">* ข้อมูลนี้เป็นความลับเฉพาะตัวแทนเท่านั้น</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 Baby Bennie - Agent Portal
+    </div>
+
+</div>
+
+<script>
+    // --- 1. ฐานข้อมูลตัวแทน (คุณมาเพิ่ม/แก้ตรงนี้ได้เลย) ---
+    const agents = [
+        { id: "msb01", name: "คุณบับบี่", status: "Active ✅" },
+        { id: "msb02", name: "คุณสายใหม", status: "Active ✅" }
+    ];
+
+    function checkAgent() {
+        const input = document.getElementById('agentInput').value.trim().toUpperCase();
+        const res = document.getElementById('resultBox');
+        const found = agents.find(a => a.id === input);
+
+        res.style.display = 'block';
+        if (found) {
+            res.style.background = '#f0fff4';
+            res.style.border = '2px solid #28a745';
+            res.style.color = '#28a745';
+            res.innerHTML = `
+                <b style="font-size:18px;">✅ พบข้อมูลตัวแทนแท้</b><br>
+                <div style="margin-top:8px; color:#555; text-align:left; display:inline-block;">
+                    รหัส: ${found.id}<br>
+                    ชื่อ: ${found.name}<br>
+                    สถานะ: ${found.status}
+                </div>
+            `;
+        } else {
+            res.style.background = '#fff5f5';
+            res.style.border = '2px solid #dc3545';
+            res.style.color = '#dc3545';
+            res.innerHTML = `<b>❌ ไม่พบข้อมูลในระบบ</b><br><span style="font-size:12px; color:#666;">โปรดตรวจสอบรหัสอีกครั้ง หรือติดต่อร้านโดยตรงค่ะ</span>`;
+        }
+    }
+
+    // --- 2. ระบบรหัสผ่านปลดล็อค ---
+    function unlockRegister() {
+        const pass = document.getElementById('passInput').value;
+        const secretKey = "BENNIE888"; // <--- ตั้งรหัสผ่านตรงนี้ค่ะ
+
+        if (pass === secretKey) {
+            document.getElementById('lockArea').style.display = 'none';
+            document.getElementById('secretContent').style.display = 'block';
+        } else {
+            alert("รหัสผ่านไม่ถูกต้องนะคะ ทักขอรหัสได้ที่แอดมินค่ะ 🌷");
+        }
+    }
+
+    // Floating Emojis
+    const emojis = ['🐶', '⭐️', '🌷', '🩷'];
+    function createEmoji() {
+        const e = document.createElement('div');
+        e.className = 'floating-emoji';
+        e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+        e.style.left = Math.random()*100+'vw';
+        e.style.fontSize = (Math.random()*20+20)+'px';
+        e.style.animationDuration = (Math.random()*10+10)+'s';
+        document.getElementById('emoji-container').appendChild(e);
+        setTimeout(()=>e.remove(), 10000);
+    }
+    setInterval(createEmoji, 1500);
+</script>
+
+</body>
+</html>
